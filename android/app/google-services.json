@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "320814345483",
+    "project_id": "gorila-investment",
+    "storage_bucket": "gorila-investment.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320814345483:android:4ee2f43d8c69610867060e",
+        "android_client_info": {
+          "package_name": "br.com.filipepiresg.investiment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320814345483-at8173bjlgj0sqmkfngsfmggpn9bd3m2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApcXiaFnfmpQcj-hDikMQ5ArTOkXNbHas"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320814345483-at8173bjlgj0sqmkfngsfmggpn9bd3m2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320814345483-cvl2c4cln9vivb4u0do9lo0q8gn2dckb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.filipepiresg.investiment"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

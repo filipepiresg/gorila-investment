@@ -1,4 +1,4 @@
-package com.investiment;
+package br.com.filipepiresg.investiment;
 
 import com.facebook.react.ReactActivity;
 
