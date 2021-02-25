@@ -8,5 +8,6 @@ export const Container = styled.SafeAreaView`
 `;
 
 export const Content = styled.View`
-  padding: 0 10px;
+  padding: 0 ${Metrics.PADDING}px;
+  flex: 1;
 `;

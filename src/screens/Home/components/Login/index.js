@@ -1,5 +1,5 @@
 import React, {useCallback, useRef, useState} from 'react';
-import {Alert} from 'react-native';
+import {Alert, Keyboard, KeyboardAvoidingView, Platform} from 'react-native';
 
 import auth from '@react-native-firebase/auth';
 
@@ -29,6 +29,7 @@ const Login = () => {
   const handleLogin = useCallback(async ({email, password}) => {
     try {
       setLoading(true);
+      Keyboard.dismiss();
       await auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
       if (error.code === 'auth/user-not-found') {
@@ -62,32 +63,34 @@ const Login = () => {
     <Container>
       <Title>Login</Title>
 
-      <Input
-        ref={emailRef}
-        autoFocus
-        value={formik.values.email}
-        onChangeText={formik.handleChange('email')}
-        keyboardType="email-address"
-        onSubmitEditing={() => passwordRef.current.focus()}
-        returnKeyType="next"
-        placeholder="Digite seu e-mail"
-        hasError={formik.touched.email && formik.errors.email}
-      />
-      <Input
-        ref={passwordRef}
-        value={formik.values.password}
-        onChangeText={formik.handleChange('password')}
-        onSubmitEditing={formik.handleSubmit}
-        returnKeyType="send"
-        secureTextEntry
-        placeholder="Digite sua senha"
-        maxLength={INVARIANTS.MAX_LENGTH_PASSWORD}
-        hasError={formik.touched.password && formik.errors.password}
-      />
+      <KeyboardAvoidingView behavior="padding" enabled={Platform.OS === 'ios'}>
+        <Input
+          ref={emailRef}
+          autoFocus
+          value={formik.values.email}
+          onChangeText={formik.handleChange('email')}
+          keyboardType="email-address"
+          onSubmitEditing={() => passwordRef.current.focus()}
+          returnKeyType="next"
+          placeholder="Digite seu e-mail"
+          hasError={formik.touched.email && formik.errors.email}
+        />
+        <Input
+          ref={passwordRef}
+          value={formik.values.password}
+          onChangeText={formik.handleChange('password')}
+          onSubmitEditing={formik.handleSubmit}
+          returnKeyType="send"
+          secureTextEntry
+          placeholder="Digite sua senha"
+          maxLength={INVARIANTS.MAX_LENGTH_PASSWORD}
+          hasError={formik.touched.password && formik.errors.password}
+        />
 
-      <Button onPress={formik.handleSubmit} disabled={loading}>
-        {loading ? <Spinner /> : <ButtonTitle>Logar</ButtonTitle>}
-      </Button>
+        <Button onPress={formik.handleSubmit} disabled={loading}>
+          {loading ? <Spinner /> : <ButtonTitle>Logar</ButtonTitle>}
+        </Button>
+      </KeyboardAvoidingView>
     </Container>
   );
 };
