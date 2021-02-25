@@ -125,6 +125,12 @@ const Main = ({user: currentUser}) => {
 
     return _data;
   }, [data]);
+  const dataSorted = useMemo(
+    () =>
+      // ORDER ASC
+      data?.sort((a, b) => a.date - b.date) || [],
+    [data],
+  );
   const today = useMemo(() => new Date(), []);
 
   const addInvestiment = useCallback(async () => {
@@ -323,9 +329,8 @@ const Main = ({user: currentUser}) => {
             <ScrollView
               showsVerticalScrollIndicator={false}
               style={Styles.list}>
-              {data
+              {dataSorted
                 .filter(({type}) => type === TYPES.RENDA_FIXA)
-                .sort((a, b) => a.date - b.date)
                 .map(({date, value, type}, index, arr) => {
                   const isLast = arr.length - 1 === index;
                   return (
@@ -358,9 +363,8 @@ const Main = ({user: currentUser}) => {
             <ScrollView
               showsVerticalScrollIndicator={false}
               style={Styles.list}>
-              {data
+              {dataSorted
                 .filter(({type}) => type === TYPES.RENDA_VARIAVEL)
-                .sort((a, b) => a.date - b.date)
                 .map(({date, value, type}, index, arr) => {
                   const isLast = arr.length - 1 === index;
                   return (
