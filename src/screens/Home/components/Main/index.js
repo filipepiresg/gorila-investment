@@ -1,10 +1,11 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {ScrollView} from 'react-native';
+import {Alert, ScrollView} from 'react-native';
 import {PieChart} from 'react-native-chart-kit';
 import DatePicker from 'react-native-datepicker';
 import {MaskService} from 'react-native-masked-text';
 import PickerSelect from 'react-native-picker-select';
 
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import {addYears, format, fromUnixTime, getUnixTime} from 'date-fns';
@@ -21,11 +22,15 @@ import Styles, {
   RowAddInvestiment,
   InputMasked,
   ResetButton,
+  DeleteButton,
   ResetText,
   AddButton,
   AddIcon,
   ActiveType,
-  Row,
+  LogoutButton,
+  LogoutIcon,
+  Active,
+  InfoIcon,
 } from './styles';
 
 const TYPES = {
@@ -45,6 +50,7 @@ const INITIAL_VALUE = {
   type: null,
   value: 0,
   date: new Date(),
+  isNew: true,
 };
 
 const chartConfig = {
@@ -146,19 +152,78 @@ const Main = ({user: currentUser}) => {
     }
   }, [currentUser.uid, data, newInvestiment]);
 
+  const logout = useCallback(async () => {
+    try {
+      await auth().signOut();
+    } catch (error) {
+      console.log('Error on sign out', error);
+    }
+  }, []);
+
   const resetValues = useCallback(() => {
     setNewInvestiment(INITIAL_VALUE);
   }, []);
 
+  const deleteInvestiment = useCallback(() => {
+    async function _delete() {
+      try {
+        setLoading(true);
+
+        const values = data.filter(
+          (item) =>
+            !(
+              item.type === newInvestiment.type &&
+              item.date === getUnixTime(newInvestiment.date) &&
+              item.value === newInvestiment.value
+            ),
+        );
+
+        await firestore()
+          .collection('users')
+          .doc(currentUser.uid)
+          .update({values});
+
+        resetValues();
+      } catch (error) {
+        console.log('Erro on delete investiment', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    Alert.alert(
+      'Excluir investimento',
+      'Tem certeza que deseja excluir esse investimento?',
+      [
+        {
+          onPress: _delete,
+          style: 'destructive',
+          text: 'Sim',
+        },
+        {
+          // onPress: resetValues,
+          style: 'cancel',
+          text: 'Não',
+        },
+      ],
+    );
+  }, [currentUser.uid, data, newInvestiment, resetValues]);
+
   return (
     <Container>
       <Content>
-        <Title>Novo Investimento</Title>
+        <Title>
+          {newInvestiment.isNew ? 'Novo Investimento' : 'Editar Investimento'}
+        </Title>
+        <LogoutButton onPress={logout}>
+          <LogoutIcon />
+        </LogoutButton>
 
         <PickerSelect
           onValueChange={(value) => {
             setNewInvestiment({...newInvestiment, type: value});
           }}
+          disabled={!newInvestiment.isNew}
           items={[
             {
               key: TYPES.RENDA_FIXA,
@@ -191,13 +256,16 @@ const Main = ({user: currentUser}) => {
             newInvestiment.value,
             MONEY_MASK_OPTIONS,
           )}
-          onChangeText={(text) => {
-            const value = MaskService.toRawValue(
-              'money',
-              text,
-              MONEY_MASK_OPTIONS,
-            );
-            setNewInvestiment({...newInvestiment, value});
+          includeRawValueInChangeText
+          onChangeText={(_, rawValue) => {
+            if (!newInvestiment.isNew) return;
+
+            // const value = MaskService.toRawValue(
+            //   'money',
+            //   text,
+            //   MONEY_MASK_OPTIONS,
+            // );
+            setNewInvestiment({...newInvestiment, value: rawValue});
           }}
         />
         <DatePicker
@@ -218,14 +286,22 @@ const Main = ({user: currentUser}) => {
             dateText: Styles.dateText,
           }}
           style={Styles.datePicker}
+          disabled={!newInvestiment.isNew}
         />
+
         <RowAddInvestiment>
           <ResetButton onPress={resetValues}>
             <ResetText>Resetar</ResetText>
           </ResetButton>
-          <AddButton onPress={addInvestiment}>
-            <AddIcon />
-          </AddButton>
+          {!newInvestiment.isNew ? (
+            <DeleteButton onPress={deleteInvestiment}>
+              <ResetText>Excluir</ResetText>
+            </DeleteButton>
+          ) : (
+            <AddButton onPress={addInvestiment}>
+              <AddIcon />
+            </AddButton>
+          )}
         </RowAddInvestiment>
       </Content>
 
@@ -238,14 +314,22 @@ const Main = ({user: currentUser}) => {
           <Content>
             <Title>Investimentos</Title>
 
-            <Row>
-              <ScrollView>
-                <ActiveType isTitle>Renda Fixa</ActiveType>
-
-                {data
-                  .filter(({type}) => type === TYPES.RENDA_FIXA)
-                  .map(({date, value, type}, index) => (
-                    <ActiveType key={`${type}-${index}`}>{`[${format(
+            <ActiveType isTitle>Renda Fixa</ActiveType>
+            <ScrollView style={Styles.list}>
+              {data
+                .filter(({type}) => type === TYPES.RENDA_FIXA)
+                .map(({date, value, type}, index) => (
+                  <Active
+                    key={`${type}-${index}`}
+                    onPress={() => {
+                      setNewInvestiment({
+                        type,
+                        value,
+                        date: fromUnixTime(date),
+                        isNew: false,
+                      });
+                    }}>
+                    <ActiveType>{`[${format(
                       date ? fromUnixTime(date) : new Date(),
                       'dd-MM-yyyy',
                     )}] ${MaskService.toMask(
@@ -253,15 +337,26 @@ const Main = ({user: currentUser}) => {
                       value,
                       MONEY_MASK_OPTIONS,
                     )}`}</ActiveType>
-                  ))}
-              </ScrollView>
-              <ScrollView>
-                <ActiveType isTitle>Renda Variável</ActiveType>
-
-                {data
-                  .filter(({type}) => type === TYPES.RENDA_VARIAVEL)
-                  .map(({date, value, type}, index) => (
-                    <ActiveType key={`${type}-${index}`}>{`[${format(
+                    <InfoIcon />
+                  </Active>
+                ))}
+            </ScrollView>
+            <ActiveType isTitle>Renda Variável</ActiveType>
+            <ScrollView style={Styles.list}>
+              {data
+                .filter(({type}) => type === TYPES.RENDA_VARIAVEL)
+                .map(({date, value, type}, index) => (
+                  <Active
+                    key={`${type}-${index}`}
+                    onPress={() => {
+                      setNewInvestiment({
+                        type,
+                        value,
+                        date: fromUnixTime(date),
+                        isNew: false,
+                      });
+                    }}>
+                    <ActiveType>{`[${format(
                       date ? fromUnixTime(date) : new Date(),
                       'dd-MM-yyyy',
                     )}] ${MaskService.toMask(
@@ -269,9 +364,10 @@ const Main = ({user: currentUser}) => {
                       value,
                       MONEY_MASK_OPTIONS,
                     )}`}</ActiveType>
-                  ))}
-              </ScrollView>
-            </Row>
+                    <InfoIcon />
+                  </Active>
+                ))}
+            </ScrollView>
           </Content>
           <Content>
             <Title>Resumo da carteira</Title>

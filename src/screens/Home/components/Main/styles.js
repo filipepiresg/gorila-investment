@@ -1,8 +1,9 @@
 import {StyleSheet} from 'react-native';
 import {TextInputMask} from 'react-native-masked-text';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import {transparentize} from 'polished';
+import {darken, desaturate, transparentize} from 'polished';
 import styled from 'styled-components/native';
 
 import {Colors, Metrics} from '~/styles';
@@ -29,12 +30,43 @@ export const Row = styled.View`
   flex: 1;
 `;
 
-export const ResetButton = styled.TouchableOpacity.attrs({
+export const LogoutButton = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.8,
+})`
+  position: absolute;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px 5px;
+  /* background-color: blue; */
+`;
+
+export const LogoutIcon = styled(Ionicons).attrs({
+  name: 'log-out-outline',
+  size: 26,
+  color: darken(0.1, 'red'),
+})`
+  transform: rotate(180deg);
+`;
+
+export const DeleteButton = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8,
 })`
   border-radius: 5px;
   width: 30%;
   background-color: red;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  padding: 10px;
+`;
+
+export const ResetButton = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.8,
+})`
+  border-radius: 5px;
+  width: 30%;
+  background-color: ${desaturate(0.2, 'orange')};
   align-items: center;
   justify-content: center;
   align-self: flex-end;
@@ -59,9 +91,19 @@ export const AddButton = styled.TouchableOpacity.attrs({
   padding: 10px;
 `;
 
+export const InfoIcon = styled(Entypo).attrs({
+  name: 'info-with-circle',
+  size: 18,
+  color: transparentize(0.5, Colors.SECONDARY),
+})`
+  position: absolute;
+  top: 3px;
+  right: 10px;
+`;
+
 export const AddIcon = styled(Entypo).attrs({
   name: 'plus',
-  size: 18,
+  size: 22,
   color: Colors.PRIMARY,
 })``;
 
@@ -80,7 +122,16 @@ export const InputMasked = styled(TextInputMask).attrs({})`
   margin-bottom: ${Metrics.PADDING}px;
 `;
 
+export const Active = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.8,
+})`
+  padding: 5px;
+  margin-bottom: 5px;
+`;
+
 export const ActiveType = styled.Text`
+  /* text-align: ${(props) => (props.isTitle ? 'center' : 'right')}; */
+  text-align: center;
   font-size: ${(props) => (props.isTitle ? '16' : '14')}px;
   font-weight: ${(props) => (props.isTitle ? 'bold' : 'normal')};
   margin-bottom: ${(props) => (props.isTitle ? '10' : '0')}px;
@@ -132,5 +183,8 @@ export default StyleSheet.create({
   },
   datePicker: {
     width: '100%',
+  },
+  list: {
+    flex: 1,
   },
 });
