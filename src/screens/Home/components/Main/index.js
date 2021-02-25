@@ -144,7 +144,7 @@ const Main = ({user: currentUser}) => {
     } finally {
       setLoading(false);
     }
-  }, [newInvestiment]);
+  }, [currentUser.uid, data, newInvestiment]);
 
   const resetValues = useCallback(() => {
     setNewInvestiment(INITIAL_VALUE);
