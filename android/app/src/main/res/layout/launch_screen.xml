@@ -11,6 +11,5 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:scaleType="center"
-    android:src="@drawable/launch_screen"
-    tools:srcCompat="@drawable/logo"></ImageView>
+    android:src="@drawable/logo"></ImageView>
 </FrameLayout>
