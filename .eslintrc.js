@@ -7,13 +7,11 @@ module.exports = {
     'airbnb',
     'plugin:react-native/all',
     'prettier',
-    'prettier/react',
-
   ],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
-    __DEV__: 'readonly'
+    __DEV__: 'readonly',
   },
   parser: 'babel-eslint',
   parserOptions: {
@@ -32,13 +30,12 @@ module.exports = {
     'react-hooks',
     'prettier',
     'eslint-plugin-import-helpers',
-
   ],
   rules: {
     camelcase: 'off',
     'prettier/prettier': ['error'],
     'react/destructuring-assignment': [0],
-    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
+    'react/jsx-filename-extension': ['error', {extensions: ['.js', '.jsx']}],
     'react/jsx-one-expression-per-line': 'off',
     'react/jsx-props-no-spreading': [0],
     'react/state-in-constructor': 'off',
@@ -54,36 +51,53 @@ module.exports = {
     'react/no-array-index-key': 'off',
     'global-require': 'off',
     'import/prefer-default-export': 'off',
-    'import/no-unresolved': [2, { ignore: ['^~', '.js$', '.jsx$', '.ts$', '.tsx$'] }],
+    'import/no-unresolved': [
+      2,
+      {ignore: ['^~', '.js$', '.jsx$', '.ts$', '.tsx$']},
+    ],
     'no-alert': 'error',
     'no-console': [
       'error',
       {
-        allow: ['disableYellowBox', 'ignoredYellowBox', 'clear', 'error', 'info', 'log', 'warn'],
+        allow: [
+          'disableYellowBox',
+          'ignoredYellowBox',
+          'clear',
+          'error',
+          'info',
+          'log',
+          'warn',
+        ],
       },
     ],
-    'no-duplicate-imports': ['error', { includeExports: true }],
-    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'no-duplicate-imports': ['error', {includeExports: true}],
+    'no-unused-vars': ['error', {argsIgnorePattern: '^_'}],
     'no-param-reassign': 'warn',
     'import-helpers/order-imports': [
       'warn',
       {
         newlinesBetween: 'always',
-        groups: ['/^react/', '/^@react/', 'module', '/^~/', ['parent', 'sibling', 'index']],
-        alphabetize: { order: 'asc', ignoreCase: true },
+        groups: [
+          '/^react/',
+          '/^@react/',
+          'module',
+          '/^~/',
+          ['parent', 'sibling', 'index'],
+        ],
+        alphabetize: {order: 'asc', ignoreCase: true},
       },
     ],
     'import/extensions': [
       'error',
       'never',
-      { svg: 'always', json: 'always', png: 'always', jpg: 'always' },
+      {svg: 'always', json: 'always', png: 'always', jpg: 'always'},
     ],
   },
   settings: {
     'import/resolver': {
       'babel-plugin-root-import': {
-        'rootPathPrefix': '~',
-        'rootPathSuffix': 'src',
+        rootPathPrefix: '~',
+        rootPathSuffix: 'src',
       },
     },
   },

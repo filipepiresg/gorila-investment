@@ -1,12 +1,8 @@
 import React from 'react';
-import { View } from 'react-native'
 
-import './config/ReactotronConfig'
+import './config/ReactotronConfig';
+import {HomeScreen as Home} from '~/screens';
 
-const App = () => {
-  return (
-    <View />
-  );
-};
+const App = () => <Home />;
 
 export default App;
