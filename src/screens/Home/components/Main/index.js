@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import {Alert, ScrollView} from 'react-native';
+import {Alert, View} from 'react-native';
 import {PieChart} from 'react-native-chart-kit';
 import DatePicker from 'react-native-datepicker';
 import {MaskService} from 'react-native-masked-text';
@@ -222,7 +222,7 @@ const Main = ({user: currentUser}) => {
 
   return (
     <Container>
-      <Content>
+      <View style={Styles.header}>
         <Title>
           {newInvestiment.isNew ? 'Novo Investimento' : 'Editar Investimento'}
         </Title>
@@ -314,87 +314,83 @@ const Main = ({user: currentUser}) => {
             </AddButton>
           )}
         </RowAddInvestiment>
-      </Content>
+      </View>
 
-      {loading ? (
-        <Content>
+      <Content>
+        {loading ? (
           <Spinner />
-        </Content>
-      ) : (
-        <>
-          <Content>
+        ) : (
+          <>
             <Title>Investimentos</Title>
 
             <ActiveType isTitle>Renda Fixa</ActiveType>
-            <ScrollView
+            {/* <ScrollView
               showsVerticalScrollIndicator={false}
-              style={Styles.list}>
-              {dataSorted
-                .filter(({type}) => type === TYPES.RENDA_FIXA)
-                .map(({date, value, type}, index, arr) => {
-                  const isLast = arr.length - 1 === index;
-                  return (
-                    <Fragment key={`${type}-${index}`}>
-                      <Active
-                        onPress={() => {
-                          setNewInvestiment({
-                            type,
-                            value,
-                            date: fromUnixTime(date),
-                            isNew: false,
-                          });
-                        }}>
-                        <ActiveType>{`[${format(
-                          date ? fromUnixTime(date) : new Date(),
-                          'dd-MM-yyyy',
-                        )}] ${MaskService.toMask(
-                          'money',
+              style={Styles.list}> */}
+            {dataSorted
+              .filter(({type}) => type === TYPES.RENDA_FIXA)
+              .map(({date, value, type}, index, arr) => {
+                const isLast = arr.length - 1 === index;
+                return (
+                  <Fragment key={`${type}-${index}`}>
+                    <Active
+                      onPress={() => {
+                        setNewInvestiment({
+                          type,
                           value,
-                          MONEY_MASK_OPTIONS,
-                        )}`}</ActiveType>
-                        <InfoIcon />
-                      </Active>
-                      {!isLast && <Separator />}
-                    </Fragment>
-                  );
-                })}
-            </ScrollView>
+                          date: fromUnixTime(date),
+                          isNew: false,
+                        });
+                      }}>
+                      <ActiveType>{`[${format(
+                        date ? fromUnixTime(date) : new Date(),
+                        'dd-MM-yyyy',
+                      )}] ${MaskService.toMask(
+                        'money',
+                        value,
+                        MONEY_MASK_OPTIONS,
+                      )}`}</ActiveType>
+                      <InfoIcon />
+                    </Active>
+                    {!isLast && <Separator />}
+                  </Fragment>
+                );
+              })}
+            {/* </ScrollView> */}
             <ActiveType isTitle>Renda Variável</ActiveType>
-            <ScrollView
+            {/* <ScrollView
               showsVerticalScrollIndicator={false}
-              style={Styles.list}>
-              {dataSorted
-                .filter(({type}) => type === TYPES.RENDA_VARIAVEL)
-                .map(({date, value, type}, index, arr) => {
-                  const isLast = arr.length - 1 === index;
-                  return (
-                    <Fragment key={`${type}-${index}`}>
-                      <Active
-                        onPress={() => {
-                          setNewInvestiment({
-                            type,
-                            value,
-                            date: fromUnixTime(date),
-                            isNew: false,
-                          });
-                        }}>
-                        <ActiveType>{`[${format(
-                          date ? fromUnixTime(date) : new Date(),
-                          'dd-MM-yyyy',
-                        )}] ${MaskService.toMask(
-                          'money',
+              style={Styles.list}> */}
+            {dataSorted
+              .filter(({type}) => type === TYPES.RENDA_VARIAVEL)
+              .map(({date, value, type}, index, arr) => {
+                const isLast = arr.length - 1 === index;
+                return (
+                  <Fragment key={`${type}-${index}`}>
+                    <Active
+                      onPress={() => {
+                        setNewInvestiment({
+                          type,
                           value,
-                          MONEY_MASK_OPTIONS,
-                        )}`}</ActiveType>
-                        <InfoIcon />
-                      </Active>
-                      {!isLast && <Separator />}
-                    </Fragment>
-                  );
-                })}
-            </ScrollView>
-          </Content>
-          <Content>
+                          date: fromUnixTime(date),
+                          isNew: false,
+                        });
+                      }}>
+                      <ActiveType>{`[${format(
+                        date ? fromUnixTime(date) : new Date(),
+                        'dd-MM-yyyy',
+                      )}] ${MaskService.toMask(
+                        'money',
+                        value,
+                        MONEY_MASK_OPTIONS,
+                      )}`}</ActiveType>
+                      <InfoIcon />
+                    </Active>
+                    {!isLast && <Separator />}
+                  </Fragment>
+                );
+              })}
+            {/* </ScrollView> */}
             <Title>Resumo da carteira</Title>
 
             <PieChart
@@ -406,9 +402,9 @@ const Main = ({user: currentUser}) => {
               backgroundColor="transparent"
               // absolute
             />
-          </Content>
-        </>
-      )}
+          </>
+        )}
+      </Content>
     </Container>
   );
 };

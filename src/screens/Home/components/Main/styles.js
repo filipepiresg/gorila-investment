@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {TextInputMask} from 'react-native-masked-text';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,8 +12,11 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const Content = styled.View`
+export const Content = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+})`
   flex: 1;
+  padding-top: ${Platform.OS === 'android' ? 10 : 0}px;
 `;
 
 export const RowAddInvestiment = styled.View`
@@ -75,7 +78,7 @@ export const ResetButton = styled.TouchableOpacity.attrs({
 
 export const ResetText = styled.Text`
   color: ${Colors.PRIMARY};
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
 `;
 
@@ -103,7 +106,7 @@ export const InfoIcon = styled(Entypo).attrs({
 
 export const AddIcon = styled(Entypo).attrs({
   name: 'plus',
-  size: 22,
+  size: 18,
   color: Colors.PRIMARY,
 })``;
 
@@ -114,7 +117,7 @@ export const Spinner = styled.ActivityIndicator.attrs({
 
 export const InputMasked = styled(TextInputMask).attrs({})`
   width: 100%;
-  font-size: 18px;
+  font-size: 14px;
   padding: 10px;
   text-align: left;
   border: 1px solid ${Colors.SECONDARY};
@@ -147,11 +150,12 @@ export const ActiveType = styled.Text.attrs({
 
 export const pickerStyle = StyleSheet.create({
   placeholder: {
-    fontSize: 18,
+    fontSize: 14,
     color: transparentize(0.2, Colors.SECONDARY),
+    padding: 10,
   },
   inputIOS: {
-    fontSize: 18,
+    fontSize: 14,
     padding: 10,
 
     borderWidth: 1,
@@ -162,7 +166,7 @@ export const pickerStyle = StyleSheet.create({
     color: 'black',
   },
   inputAndroid: {
-    fontSize: 18,
+    fontSize: 14,
     padding: 10,
 
     borderWidth: 1,
@@ -185,7 +189,7 @@ export default StyleSheet.create({
     // marginBottom: Metrics.PADDING,
   },
   dateText: {
-    fontSize: 18,
+    fontSize: 14,
     padding: 10,
     textAlign: 'left',
   },
@@ -194,5 +198,8 @@ export default StyleSheet.create({
   },
   list: {
     flex: 1,
+  },
+  header: {
+    paddingBottom: 20,
   },
 });

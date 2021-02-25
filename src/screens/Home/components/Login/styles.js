@@ -16,7 +16,7 @@ export const Input = styled.TextInput.attrs((props) => ({
   ),
   underlineColorAndroid: 'transparent',
 }))`
-  font-size: 18px;
+  font-size: 14px;
   border: ${(props) => (props.hasError ? 2 : 1)}px solid
     ${(props) => (props.hasError ? 'red' : Colors.SECONDARY)};
   margin: 0 0 ${Metrics.PADDING}px;
@@ -38,19 +38,19 @@ export const Button = styled.TouchableOpacity.attrs({
 `;
 
 export const ButtonTitle = styled.Text`
-  font-size: 18px;
+  font-size: 14px;
   color: ${Colors.PRIMARY};
   font-weight: bold;
 `;
 
 export const Spinner = styled.ActivityIndicator.attrs({
-  size: 22,
+  size: 18,
   color: Colors.PRIMARY,
 })``;
 
 export const Message = styled.Text`
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   margin-top: 10px;
   color: ${darken(0.4, Colors.BACKGROUND)};
   font-weight: bold;
