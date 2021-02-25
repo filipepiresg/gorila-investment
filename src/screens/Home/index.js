@@ -14,18 +14,22 @@ const Home = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
-  const onAuthStateChanged = useCallback((_user) => {
-    setUser(_user);
+  const onAuthStateChanged = useCallback(
+    (_user) => {
+      setUser(_user);
 
-    if (initializing) {
-      setInitializing(false);
-      SplashScreen.hide();
-    }
-  }, []);
+      if (initializing) {
+        setInitializing(false);
+        SplashScreen.hide();
+      }
+    },
+    [initializing],
+  );
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

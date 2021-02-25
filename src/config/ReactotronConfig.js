@@ -17,5 +17,6 @@ if (__DEV__) {
 
   tron.clear();
 
+  // eslint-disable-next-line no-console
   console.tron = tron;
 }
