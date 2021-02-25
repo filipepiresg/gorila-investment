@@ -14,7 +14,6 @@ const Home = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
-  // Handle user state changes
   const onAuthStateChanged = useCallback((_user) => {
     setUser(_user);
 

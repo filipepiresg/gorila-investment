@@ -1,4 +1,4 @@
-import {transparentize} from 'polished';
+import {darken, transparentize} from 'polished';
 import styled from 'styled-components/native';
 
 import {Colors, Metrics} from '~/styles';
@@ -47,3 +47,11 @@ export const Spinner = styled.ActivityIndicator.attrs({
   size: 22,
   color: Colors.PRIMARY,
 })``;
+
+export const Message = styled.Text`
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+  color: ${darken(0.4, Colors.BACKGROUND)};
+  font-weight: bold;
+`;

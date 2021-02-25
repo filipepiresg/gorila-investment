@@ -8,7 +8,14 @@ import * as Yup from 'yup';
 
 import {Title} from '~/components';
 
-import {Container, Input, Button, ButtonTitle, Spinner} from './styles';
+import {
+  Container,
+  Input,
+  Button,
+  ButtonTitle,
+  Spinner,
+  Message,
+} from './styles';
 
 const INVARIANTS = {
   MIN_LENGTH_PASSWORD: 4,
@@ -93,6 +100,8 @@ const Login = () => {
           {loading ? <Spinner /> : <ButtonTitle>Logar</ButtonTitle>}
         </Button>
       </KeyboardAvoidingView>
+
+      <Message>Caso não tenha cadastro, cadastraremos automaticamente</Message>
     </Container>
   );
 };
