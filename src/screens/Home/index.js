@@ -7,6 +7,7 @@ import auth from '@react-native-firebase/auth';
 import {Colors} from '~/styles';
 
 import Login from './components/Login';
+import Main from './components/Main';
 import {Container, Content} from './styles';
 
 const Home = () => {
@@ -34,7 +35,7 @@ const Home = () => {
         backgroundColor={Colors.SECONDARY}
         barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
       />
-      <Content>{!user && <Login />}</Content>
+      <Content>{!user ? <Login /> : <Main user={user} />}</Content>
     </Container>
   );
 };
