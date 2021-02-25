@@ -25,6 +25,10 @@ Roda em dispositivos Apple (iOS) e em Android.
 Por ser um requisito (de ser single page), foi componentizado o login e a tela principal. Ao qual, assim que é feito o login/cadastro é rerenderizado o conteúdo principal do app.
 Logado, o usuário pode criar/excluir novos investimentos, além de resetar o conteúdo do header, caso necessite. Abaixo, é possível visualizar as listas de ativos de renda fixa ou variável, além de que é possível visualizar o gráfico ao final da tela.
 
+No login, deve ser inserido um email e uma senha (de 4 até 8 caracteres), se o e-mail já estiver sido cadastrado o usuário vai logar diretamente, caso o email não seja cadastrado, irá cadastrar e logar (automagicamente). Autenticação feita via Firebase.
+
+Na tela principal, num primeiro momento, o usuário só terá uma tela para add novos investimentos, passando dados como o tipo de renda, o valor do investimento e a data investida (note: só poderá ser adicionado datas anterios, de um ano antes até o dia atual). Em seguida, poderá ser pressionado 2 botões: o resetar irá resetar os dados posteriormente adicionados ou o botão "+", que serve para adicionar o investimento no firestore. Caso, já tenha sido adicionado algum investimento, será visualizada 2 listas exibindo data e o valor de cada transação e abaixo o gráfico com percentual das rendas investidas. Para remover uma transação, é simples, somente pressionar a transação que queira remover, ela irá ser exibida na parte de cima da tela e no lugar do botão "+", será exibido o "excluir", que irá remover no firestore.
+
 Ferramentas utilizadas foram:
 
 - React-Native
