@@ -129,12 +129,20 @@ export const Active = styled.TouchableOpacity.attrs({
   margin-bottom: 5px;
 `;
 
-export const ActiveType = styled.Text`
-  /* text-align: ${(props) => (props.isTitle ? 'center' : 'right')}; */
-  text-align: center;
+export const Separator = styled.View`
+  /* height: 10px; */
+  margin: 5px;
+  border: 0.5px solid ${transparentize(0.9, 'green')};
+`;
+
+export const ActiveType = styled.Text.attrs({
+  numberOfLines: 1,
+})`
+  text-align: ${(props) => (props.isTitle ? 'center' : 'left')};
   font-size: ${(props) => (props.isTitle ? '16' : '14')}px;
   font-weight: ${(props) => (props.isTitle ? 'bold' : 'normal')};
   margin-bottom: ${(props) => (props.isTitle ? '10' : '0')}px;
+  margin-right: 20px;
 `;
 
 export const pickerStyle = StyleSheet.create({

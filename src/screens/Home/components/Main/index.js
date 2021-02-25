@@ -1,4 +1,10 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {Alert, ScrollView} from 'react-native';
 import {PieChart} from 'react-native-chart-kit';
 import DatePicker from 'react-native-datepicker';
@@ -27,6 +33,7 @@ import Styles, {
   AddButton,
   AddIcon,
   ActiveType,
+  Separator,
   LogoutButton,
   LogoutIcon,
   Active,
@@ -76,8 +83,6 @@ const Main = ({user: currentUser}) => {
       .onSnapshot((documentSnapshot) => {
         if (documentSnapshot.exists) {
           const values = documentSnapshot.data()?.values || [];
-          // ORDER ASC
-          values.sort((a, b) => a.date - b.date);
 
           setData(values);
         } else {
@@ -315,58 +320,74 @@ const Main = ({user: currentUser}) => {
             <Title>Investimentos</Title>
 
             <ActiveType isTitle>Renda Fixa</ActiveType>
-            <ScrollView style={Styles.list}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={Styles.list}>
               {data
                 .filter(({type}) => type === TYPES.RENDA_FIXA)
-                .map(({date, value, type}, index) => (
-                  <Active
-                    key={`${type}-${index}`}
-                    onPress={() => {
-                      setNewInvestiment({
-                        type,
-                        value,
-                        date: fromUnixTime(date),
-                        isNew: false,
-                      });
-                    }}>
-                    <ActiveType>{`[${format(
-                      date ? fromUnixTime(date) : new Date(),
-                      'dd-MM-yyyy',
-                    )}] ${MaskService.toMask(
-                      'money',
-                      value,
-                      MONEY_MASK_OPTIONS,
-                    )}`}</ActiveType>
-                    <InfoIcon />
-                  </Active>
-                ))}
+                .sort((a, b) => a.date - b.date)
+                .map(({date, value, type}, index, arr) => {
+                  const isLast = arr.length - 1 === index;
+                  return (
+                    <Fragment key={`${type}-${index}`}>
+                      <Active
+                        onPress={() => {
+                          setNewInvestiment({
+                            type,
+                            value,
+                            date: fromUnixTime(date),
+                            isNew: false,
+                          });
+                        }}>
+                        <ActiveType>{`[${format(
+                          date ? fromUnixTime(date) : new Date(),
+                          'dd-MM-yyyy',
+                        )}] ${MaskService.toMask(
+                          'money',
+                          value,
+                          MONEY_MASK_OPTIONS,
+                        )}`}</ActiveType>
+                        <InfoIcon />
+                      </Active>
+                      {!isLast && <Separator />}
+                    </Fragment>
+                  );
+                })}
             </ScrollView>
             <ActiveType isTitle>Renda Variável</ActiveType>
-            <ScrollView style={Styles.list}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={Styles.list}>
               {data
                 .filter(({type}) => type === TYPES.RENDA_VARIAVEL)
-                .map(({date, value, type}, index) => (
-                  <Active
-                    key={`${type}-${index}`}
-                    onPress={() => {
-                      setNewInvestiment({
-                        type,
-                        value,
-                        date: fromUnixTime(date),
-                        isNew: false,
-                      });
-                    }}>
-                    <ActiveType>{`[${format(
-                      date ? fromUnixTime(date) : new Date(),
-                      'dd-MM-yyyy',
-                    )}] ${MaskService.toMask(
-                      'money',
-                      value,
-                      MONEY_MASK_OPTIONS,
-                    )}`}</ActiveType>
-                    <InfoIcon />
-                  </Active>
-                ))}
+                .sort((a, b) => a.date - b.date)
+                .map(({date, value, type}, index, arr) => {
+                  const isLast = arr.length - 1 === index;
+                  return (
+                    <Fragment key={`${type}-${index}`}>
+                      <Active
+                        onPress={() => {
+                          setNewInvestiment({
+                            type,
+                            value,
+                            date: fromUnixTime(date),
+                            isNew: false,
+                          });
+                        }}>
+                        <ActiveType>{`[${format(
+                          date ? fromUnixTime(date) : new Date(),
+                          'dd-MM-yyyy',
+                        )}] ${MaskService.toMask(
+                          'money',
+                          value,
+                          MONEY_MASK_OPTIONS,
+                        )}`}</ActiveType>
+                        <InfoIcon />
+                      </Active>
+                      {!isLast && <Separator />}
+                    </Fragment>
+                  );
+                })}
             </ScrollView>
           </Content>
           <Content>
