@@ -25,14 +25,6 @@ export const Input = styled.TextInput.attrs((props) => ({
   color: ${(props) => (props.hasError ? 'red' : Colors.SECONDARY)};
 `;
 
-export const Title = styled.Text`
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: ${Colors.BLACK};
-  margin-bottom: ${Metrics.PADDING}px;
-`;
-
 export const Button = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8,
 })`

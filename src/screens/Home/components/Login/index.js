@@ -6,7 +6,9 @@ import auth from '@react-native-firebase/auth';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 
-import {Container, Input, Title, Button, ButtonTitle, Spinner} from './styles';
+import {Title} from '~/components';
+
+import {Container, Input, Button, ButtonTitle, Spinner} from './styles';
 
 const INVARIANTS = {
   MIN_LENGTH_PASSWORD: 4,
