@@ -141,10 +141,11 @@ export const Separator = styled.View`
 export const ActiveType = styled.Text.attrs({
   numberOfLines: 1,
 })`
-  text-align: ${(props) => (props.isTitle ? 'center' : 'left')};
+  text-align: ${(props) =>
+    props.isTitle || props.isEmpty ? 'center' : 'left'};
   font-size: ${(props) => (props.isTitle ? '16' : '14')}px;
   font-weight: ${(props) => (props.isTitle ? 'bold' : 'normal')};
-  margin-bottom: ${(props) => (props.isTitle ? '10' : '0')}px;
+  margin-bottom: ${(props) => (props.isTitle || props.isEmpty ? '10' : '0')}px;
   margin-right: 20px;
 `;
 
