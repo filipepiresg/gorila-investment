@@ -1,14 +1,14 @@
 # Gorila Investimento
 
 - [Gorila Investimento](#gorila-investimento)
-  - [Solucão](#solucão)
+  - [Solução](#solução)
   - [Funcionamento](#funcionamento)
     - [Resumo](#resumo)
     - [Ferramentas utilizadas](#ferramentas-utilizadas)
   - [Como rodar](#como-rodar)
   - [SCREENSHOTS](#screenshots)
 
-## Solucão
+## Solução
 
 Projeto criado com o comando `react-native` utilizando a versão 0.63.4. Segue as definições do [teste técnico](https://www.notion.so/Teste-Gorila-Front-End-c9b2983ddcb04492865fe796d0ec20cc).
 Algumas questões precisam ser relatadas:
@@ -16,7 +16,7 @@ Algumas questões precisam ser relatadas:
 - O teste parece para full stack, então algumas coisas foram ignoradas
   - Como o fato de `hospedar` o backend
   - Ou de utilizar ao menos 3 `endpoints` para serem consumidos.
-- Foi feito como `One Single Page`, como proposto, e isso inviabiliza a customizacão/estilizacão da tela, de maneira mais ampla.
+- Foi feito como `One Single Page`, como proposto, e isso inviabiliza a customização/estilização da tela, de maneira mais ampla.
 
 Pode ser baixado o apk (versão android) [aqui](https://github.com/filipepiresg/react-native-investiment/releases)
 
@@ -39,7 +39,7 @@ Caso, já tenha sido adicionado algum investimento, será visualizada 2 listas e
 - React-Native
 - Styled-Components
 - Firebase
-- Reactotron (para debug)
+- Rea˜totron (para debug)
 - Configuracões de Eslint/Prettier/Commitlint para legibilidade do código/projeto
 
 ## Como rodar
