@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@react-native-firebase/app": "^10.8.1",
+    "@react-native-firebase/auth": "^10.8.1",
+    "@react-native-firebase/firestore": "^10.8.1",
     "date-fns": "^2.17.0",
     "formik": "^2.2.6",
     "polished": "^4.1.1",
